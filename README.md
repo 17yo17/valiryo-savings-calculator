@@ -46,9 +46,11 @@ This tool demonstrates the long-term value of the product by providing **persona
 
 Location-based utility data is stored in a **simple, easy-to-edit file**. Anyone can add new locations or update existing rates **without modifying the main code**.  
 
-1. Navigate to the `rates.json` file in the repository.  
+[Keep track of rates here](https://docs.google.com/spreadsheets/d/1JG8mvXOH4Ls0U0Tc5bv9ulz-RKctLNknsetDF8dPQPI/edit?usp=sharing)
+
+1. Navigate to the `locations.json` file in the repository.  
 2. Click the **pencil icon** (Edit this file) in the top right.  
 3. **Add a New Location:**  
 
 ```json
-"au_sydney": { "elec": 0.21, "water": 0.0025, "currency": "$" }
+"jp-kyoto": {"name": "Japan - Kyoto", "elec": 0.21, "water": 0.0025 }
