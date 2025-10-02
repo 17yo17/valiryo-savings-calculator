@@ -97,25 +97,29 @@
         <div class="input-group">
             <label for="location">Select Location (Avg. Rates):</label>
             <select id="location">
-                <!-- Location options will be dynamically inserted here by script.js -->
-            </select>
-        </div>
-        <div class="input-group">
-            <label for="currency">Currency:</label>
-            <select id="currency">
-                <!-- Currency options will be dynamically inserted here by script.js -->
+                <!-- Dynamically loaded by script.js -->
             </select>
         </div>
         <div class="input-group">
             <label for="cost-electricity">Electricity Cost (per kWh):</label>
-            <input type="number" id="cost-electricity" step="0.01" value="0.27">
+            <input type="number" id="cost-electricity" step="0.01">
         </div>
         <div class="input-group">
             <label for="cost-water">Water Cost (per gallon):</label>
-            <input type="number" id="cost-water" step="0.0001" value="0.0006">
+            <input type="number" id="cost-water" step="0.0001">
+        </div>
+        <div class="input-group">
+            <label for="solar-reimbursement">Solar Reimbursement (per kWh):</label>
+            <input type="number" id="solar-reimbursement" step="0.01" value="0.00">
         </div>
 
         <h3>Your Projected Savings</h3>
+         <div class="input-group">
+            <label for="display-currency">Display Savings In:</label>
+            <select id="display-currency">
+                <!-- Dynamically loaded by script.js -->
+            </select>
+        </div>
         <div class="results-group">
             <p>Annual Financial Savings: <span id="annual-savings">$0.00</span></p>
             <p>Annual CO₂ Reduction: <span id="annual-co2-savings">0.00 kg</span></p>
@@ -124,7 +128,6 @@
         </div>
     </div>
 
-    <!-- This links the HTML to the JavaScript file -->
     <script src="script.js"></script>
 
 </body>
