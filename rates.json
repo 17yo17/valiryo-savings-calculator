@@ -33,7 +33,7 @@
     "name": "Japan - Kyoto",
     "elec": 0.15,
     "water": 0.0019,
-    "currency": ""
+    "currency": "JPY"
   },
   "es_madrid": {
     "name": "Spain - Madrid",
