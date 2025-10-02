@@ -21,7 +21,7 @@
     "name": "UK - London",
     "elec": 0.38,
     "water": 0.009,
-    "currency": ""
+    "currency": "EUR"
   },
   "jp_tokyo": {
     "name": "Japan - Tokyo",
