@@ -1,0 +1,32 @@
+{
+  "custom": {
+    "elec": 0.27,
+    "water": 0.0006,
+    "currency": "$"
+  },
+  "us_sandiego": {
+    "elec": 0.47,
+    "water": 0.007,
+    "currency": "$"
+  },
+  "us_newyork": {
+    "elec": 0.24,
+    "water": 0.004,
+    "currency": "$"
+  },
+  "uk_london": {
+    "elec": 0.38,
+    "water": 0.009,
+    "currency": "?"
+  },
+  "jp_tokyo": {
+    "elec": 0.2,
+    "water": 0.002,
+    "currency": "?"
+  },
+  "es_madrid": {
+    "elec": 0.25,
+    "water": 0.002,
+    "currency": "?"
+  }
+}
