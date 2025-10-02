@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const locationData = locations[locationId];
             electricityInput.value = locationData.elec;
             waterInput.value = locationData.water;
-            // The local currency is now handled internally, so no dropdown to update.
             calculateSavings();
         }
     }
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const costWater = parseFloat(waterInput.value) || 0;
         const solarReimbursement = parseFloat(document.getElementById('solar-reimbursement').value) || 0;
         
-        // Get the local currency ID directly from the selected location's data
         const selectedLocationId = locationSelect.value;
         const localCurrencyId = locations[selectedLocationId]?.currencyId || 'USD';
         const displayCurrencyId = displayCurrencySelect.value;
@@ -105,10 +103,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // --- Update the display ---
         const displaySymbol = currencyDefinitions[displayCurrencyId]?.symbol || '$';
-        document.getElementById('annual-savings').innerText = displaySymbol + annualSavings.toFixed(2);
-        document.getElementById('lifetime-savings').innerText = displaySymbol + lifetimeSavings.toFixed(2);
-        document.getElementById('annual-co2-savings').innerText = annualCo2Savings.toFixed(2) + ' kg';
-        document.getElementById('device-lifetime').innerText = lifetimeYears.toFixed(0) + ' Years';
+        const numberFormatOptions = {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        };
+
+        document.getElementById('annual-savings').innerText = displaySymbol + annualSavings.toLocaleString(undefined, numberFormatOptions);
+        document.getElementById('lifetime-savings').innerText = displaySymbol + lifetimeSavings.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        document.getElementById('annual-co2-savings').innerText = annualCo2Savings.toLocaleString(undefined, numberFormatOptions) + ' kg';
+        document.getElementById('device-lifetime').innerText = lifetimeYears.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' Years';
     }
 
     // --- Attach event listeners ---
@@ -118,3 +124,4 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', calculateSavings);
     });
 });
+
