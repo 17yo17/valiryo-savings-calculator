@@ -1,1 +1,37 @@
-{}
+{
+  "custom": {
+    "name": "Custom/Manual Entry",
+    "elec": 0.27,
+    "water": 0.0006
+  },
+  "us_sandiego": {
+    "name": "USA - San Diego, CA",
+    "elec": 0.47,
+    "water": 0.007
+  },
+  "us_newyork": {
+    "name": "USA - New York, NY",
+    "elec": 0.24,
+    "water": 0.004
+  },
+  "uk_london": {
+    "name": "UK - London",
+    "elec": 0.38,
+    "water": 0.009
+  },
+  "jp_tokyo": {
+    "name": "Japan - Tokyo",
+    "elec": 0.2,
+    "water": 0.002
+  },
+  "jp_kyoto": {
+    "name": "Japan - Kyoto",
+    "elec": 0.15,
+    "water": 0.0019
+  },
+  "es_madrid": {
+    "name": "Spain - Madrid",
+    "elec": 0.25,
+    "water": 0.002
+  }
+}
