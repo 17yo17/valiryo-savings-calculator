@@ -27,7 +27,7 @@
     "name": "Japan - Tokyo",
     "elec": 0.2,
     "water": 0.002,
-    "currency": ""
+    "currency": "JPY"
   },
   "jp_kyoto": {
     "name": "Japan - Kyoto",
