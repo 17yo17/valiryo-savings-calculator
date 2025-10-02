@@ -15,7 +15,7 @@
     "name": "USA - New York, NY",
     "elec": 0.24,
     "water": 0.004,
-    "currency": ""
+    "currency": "USD"
   },
   "uk_london": {
     "name": "UK - London",
