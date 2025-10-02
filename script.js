@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let locationRates = {}; // This will hold our data from rates.json
 
     // --- FETCH DATA and INITIALIZE THE CALCULATOR ---
-    // This fetches the JSON file and then sets up the calculator logic.
     fetch('rates.json')
         .then(response => {
             if (!response.ok) {
@@ -19,8 +18,29 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             locationRates = data;
+
+            // --- DYNAMICALLY POPULATE DROPDOWNS ---
+            const currencies = new Set();
+            for (const locationId in locationRates) {
+                // Populate location dropdown
+                const option = document.createElement('option');
+                option.value = locationId;
+                option.textContent = locationRates[locationId].name;
+                locationSelect.appendChild(option);
+                
+                // Collect all unique currencies
+                currencies.add(locationRates[locationId].currency);
+            }
+
+            // Populate currency dropdown
+            currencies.forEach(currency => {
+                const option = document.createElement('option');
+                option.value = currency;
+                option.textContent = currency; 
+                currencySelect.appendChild(option);
+            });
             
-            // --- EVENT HANDLER: Update costs when a new location is selected ---
+            // --- EVENT HANDLER for location changes ---
             locationSelect.addEventListener('change', function() {
                 const selectedLocation = this.value;
                 if (locationRates[selectedLocation]) {
@@ -43,13 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error fetching or parsing rates.json:', error);
-            // --- IMPROVED ERROR HANDLING ---
-            // This will now display a helpful error message directly on the page.
             const calculatorDiv = document.getElementById('valiryo-calculator');
             calculatorDiv.innerHTML = `
                 <h2 style="color: #D8000C;">Error Loading Data</h2>
                 <p style="text-align: center; background-color: #FFBABA; padding: 10px; border-radius: 6px;">
-                    Could not load 'rates.json'. Please ensure the file is in the same folder as your HTML and that you are running this page from a local web server, not a <code>file:///</code> URL.
+                    Could not load 'rates.json'. Please ensure the file is in the same folder as your HTML and that you are running this page from a local web server.
                 </p>`;
         });
 
@@ -62,13 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const currencySymbol = currencySelect.value;
 
         // --- Constants based on the Valiryo document ---
-        const electricityPerTowel = 6.126 / 6;    // 1.021 kWh
+        const electricityPerTowel = 6.126 / 6;
         const waterPerTowel = 3.52;
-        const detergentPerTowel = 0.28 / 6;       // ~$0.047
-        const softenerPerTowel = 0.12 / 6;        // ~$0.019
+        const detergentPerTowel = 0.28 / 6;
+        const softenerPerTowel = 0.12 / 6;
         const electricityValiryo = 0.1265;
         const co2PerKwh = 0.219;
-        const co2PerGallon = 0.000789 / 0.264;    // ~0.003
+        const co2PerGallon = 0.000789 / 0.264;
         const motorLifetimeUses = 225000;
 
         // --- Calculations ---
