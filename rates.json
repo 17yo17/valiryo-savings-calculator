@@ -27,7 +27,7 @@
   "jp_kyoto": {
     "elec": 0.15,
     "water": 0.0019,
-    "currency": ""
+    "currency": "?"
   },
   "es_madrid": {
     "elec": 0.25,
