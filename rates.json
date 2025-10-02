@@ -3,13 +3,13 @@
     "name": "Custom/Manual Entry",
     "elec": 0.27,
     "water": 0.0006,
-    "currency": ""
+    "currency": "USD"
   },
   "us_sandiego": {
     "name": "USA - San Diego, CA",
     "elec": 0.47,
     "water": 0.007,
-    "currency": ""
+    "currency": "USD"
   },
   "us_newyork": {
     "name": "USA - New York, NY",
