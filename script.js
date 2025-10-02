@@ -1,38 +1,60 @@
 // This function runs when the page is fully loaded to prevent errors.
 document.addEventListener('DOMContentLoaded', function() {
-
-    // --- LOCATION DATA: Add more locations and their average rates here ---
-    // Note: Rates are estimates for demonstration and can be updated with more precise data.
-    const locationRates = {
-        "custom":      { elec: 0.27, water: 0.0006, currency: "$" },
-        "us_sandiego": { elec: 0.47, water: 0.0070, currency: "$" },
-        "us_newyork":  { elec: 0.24, water: 0.0040, currency: "$" },
-        "uk_london":   { elec: 0.38, water: 0.0090, currency: "£" },
-        "jp_tokyo":    { elec: 0.20, water: 0.0020, currency: "¥" },
-        "es_madrid":   { elec: 0.25, water: 0.0020, currency: "€" }
-    };
-
-    // --- Get references to the HTML elements we need to interact with ---
+    
+    // --- Get references to the HTML elements ---
     const locationSelect = document.getElementById('location');
     const currencySelect = document.getElementById('currency');
     const electricityInput = document.getElementById('cost-electricity');
     const waterInput = document.getElementById('cost-water');
+    let locationRates = {}; // This will hold our data from rates.json
 
-    // --- EVENT HANDLER: Update costs when a new location is selected ---
-    locationSelect.addEventListener('change', function() {
-        const selectedLocation = this.value;
-        if (locationRates[selectedLocation]) {
-            const rates = locationRates[selectedLocation];
-            electricityInput.value = rates.elec;
-            waterInput.value = rates.water;
-            currencySelect.value = rates.currency;
-            // It's important to recalculate after the values are updated.
+    // --- FETCH DATA and INITIALIZE THE CALCULATOR ---
+    // This fetches the JSON file and then sets up the calculator logic.
+    fetch('rates.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            locationRates = data;
+            
+            // --- EVENT HANDLER: Update costs when a new location is selected ---
+            locationSelect.addEventListener('change', function() {
+                const selectedLocation = this.value;
+                if (locationRates[selectedLocation]) {
+                    const rates = locationRates[selectedLocation];
+                    electricityInput.value = rates.elec;
+                    waterInput.value = rates.water;
+                    currencySelect.value = rates.currency;
+                    calculateSavings(); // Recalculate after updating values
+                }
+            });
+
+            // Set the initial state when the page loads
+            locationSelect.value = "custom";
+            electricityInput.value = locationRates.custom.elec;
+            waterInput.value = locationRates.custom.water;
+            currencySelect.value = locationRates.custom.currency;
+            
+            // Run the initial calculation
             calculateSavings();
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error fetching or parsing rates.json:', error);
+            // --- IMPROVED ERROR HANDLING ---
+            // This will now display a helpful error message directly on the page.
+            const calculatorDiv = document.getElementById('valiryo-calculator');
+            calculatorDiv.innerHTML = `
+                <h2 style="color: #D8000C;">Error Loading Data</h2>
+                <p style="text-align: center; background-color: #FFBABA; padding: 10px; border-radius: 6px;">
+                    Could not load 'rates.json'. Please ensure the file is in the same folder as your HTML and that you are running this page from a local web server, not a <code>file:///</code> URL.
+                </p>`;
+        });
 
     function calculateSavings() {
-        // --- Get user inputs and provide default values to prevent errors ---
+        // --- Get user inputs and provide default values ---
         const dailyUses = parseFloat(document.getElementById('daily-uses').value) || 0;
         const washFrequency = parseFloat(document.getElementById('wash-frequency').value) || 1;
         const costElectricity = parseFloat(electricityInput.value) || 0;
@@ -49,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const co2PerGallon = 0.000789 / 0.264;    // ~0.003
         const motorLifetimeUses = 225000;
 
-        // --- Perform all the calculations ---
+        // --- Calculations ---
         const singleTowelCycleCost = (electricityPerTowel * costElectricity) + (waterPerTowel * costWater) + detergentPerTowel + softenerPerTowel;
         const effectiveTowelCost = singleTowelCycleCost / washFrequency;
         const valiryoCost = electricityValiryo * costElectricity;
@@ -65,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const lifetimeYears = (dailyUses > 0) ? (motorLifetimeUses / dailyUses) / 365 : 0;
 
-        // --- Update the display with the calculated results ---
+        // --- Update the display ---
         document.getElementById('annual-savings').innerText = currencySymbol + annualSavings.toFixed(2);
         document.getElementById('lifetime-savings').innerText = currencySymbol + lifetimeSavings.toFixed(2);
         document.getElementById('annual-co2-savings').innerText = annualCo2Savings.toFixed(2) + ' kg';
@@ -78,15 +100,5 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('input', calculateSavings);
         input.addEventListener('change', calculateSavings);
     });
-    
-    // --- Set the initial state when the page loads ---
-    // This ensures the default 'Custom' values are loaded and calculated.
-    locationSelect.value = "custom";
-    electricityInput.value = "0.27";
-    waterInput.value = "0.0006";
-    currencySelect.value = "$";
-
-    // Run the initial calculation on page load
-    calculateSavings();
 });
 

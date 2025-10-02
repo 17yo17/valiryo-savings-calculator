@@ -17,16 +17,17 @@
   "uk_london": {
     "elec": 0.38,
     "water": 0.009,
-    "currency": "?"
+    "currency": "£"
   },
   "jp_tokyo": {
     "elec": 0.2,
     "water": 0.002,
-    "currency": "?"
+    "currency": "¥"
   },
   "es_madrid": {
     "elec": 0.25,
     "water": 0.002,
-    "currency": "?"
+    "currency": "€"
   }
 }
+
